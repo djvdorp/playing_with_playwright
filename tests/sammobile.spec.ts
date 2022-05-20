@@ -10,6 +10,12 @@ test('load single.php, scroll to footer', async ({ page }) => {
 	cc_locator.click()
   } catch {}
 
+  // wait some seconds
+  await page.waitForTimeout(5000);
+
+  // await state
+  await page.waitForLoadState('domcontentloaded');
+
   // Click .article-item.article-item-flex > a >> nth=0
   await Promise.all([
     page.waitForNavigation(/*{ url: 'https://www.sammobile.com/#google_vignette' }*/),
