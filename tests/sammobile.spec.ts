@@ -2,8 +2,14 @@ import { test, expect } from '@playwright/test';
 test('load single.php, scroll to footer', async ({ page }) => {
   // Go to https://www.sammobile.com/
   await page.goto('https://www.sammobile.com/');
-  // Click text=Allow all
-  await page.locator('text=Allow all').click();
+
+  try {
+	// Click text=Allow all
+	const cc_locator = page.locator('text=Allow all');
+	await cc_locator.textContent({ timeout: 3000 })
+	cc_locator.click()
+  } catch {}
+
   // Click .article-item.article-item-flex > a >> nth=0
   await Promise.all([
     page.waitForNavigation(/*{ url: 'https://www.sammobile.com/#google_vignette' }*/),
@@ -11,10 +17,10 @@ test('load single.php, scroll to footer', async ({ page }) => {
   ]);
 
   try {
-  	// Click [aria-label="Close ad"]
-  	const locator = page.frameLocator('iframe[name="aswift_2"]').frameLocator('iframe[name="ad_iframe"]').locator('[aria-label="Close ad"]');
-	description = await locator.textContent({ timeout: 3000 })
-	locator.click()
+	// Click [aria-label="Close ad"]
+	const gv_locator = page.frameLocator('iframe[name="aswift_2"]').frameLocator('iframe[name="ad_iframe"]').locator('[aria-label="Close ad"]');
+	await gv_locator.textContent({ timeout: 3000 })
+	gv_locator.click()
   } catch {}
 
   //await expect(page).toHaveURL('https://www.sammobile.com/news/bill-gates-uses-samsung-foldable-instead-of-microsoft-surface-duo/');
